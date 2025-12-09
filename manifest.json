@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "version": "1.0",
+  "name": "Midnight Purple Tabs",
+  "description": "Dark black theme with neon purple accents similar to your screenshot.",
+  "theme": {
+    "colors": {
+      "frame": [5, 5, 5],
+      "frame_inactive": [15, 15, 15],
+      "toolbar": [5, 5, 5],
+      "tab_background_text": [255, 255, 255],
+      "tab_text": [255, 255, 255],
+      "bookmark_text": [220, 220, 220],
+
+      "ntp_background": [5, 5, 5],
+      "ntp_text": [255, 255, 255],
+      "ntp_link": [180, 140, 255],
+      "button_background": [20, 20, 20],
+
+      "toolbar_button_icon": [230, 230, 230],
+      "toolbar_button_icon_inactive": [120, 120, 120],
+
+      "tab_background_separator": [160, 32, 240],
+      "toolbar_top_separator": [160, 32, 240],
+      "tab_shadow": [160, 32, 240]
+    },
+    "properties": {
+      "ntp_background_alignment": "center",
+      "ntp_background_repeat": "no-repeat"
+    }
+  }
+}
