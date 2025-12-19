@@ -1,0 +1,253 @@
+@-moz-document url("chrome://browser/content/browser.xhtml") {
+
+  :root {
+    --neo-purple-rgb: 196, 0, 214;
+  }
+
+  /* ===== GLOBAL BARS: PURE BLACK + TOP PURPLE GLOW ===== */
+
+  #navigator-toolbox {
+    background-color: #000000 !important;
+    border-width: thick thin medium thin !important;
+    border-color: rgb(5,5,5) !important;
+    box-shadow: none !important;
+    position: relative;
+  }
+
+    /* Change BOTH Navigation Bar and Bookmark Bar Background Color */
+  #PersonalToolbar {
+    background-color: rgb(196, 0, 214) !important;
+    background-image: none !important;
+  }
+
+  /* Change Bookmark Text Color to Black */
+  #PersonalToolbar .toolbarbutton-text {
+    color: #000000 !important;
+    font-weight: bold !important;
+  }
+
+  /* URL Bar - Black background with white text */
+  #urlbar-background {
+    background-color: #000000 !important;
+    border-color: #000000 !important;
+  }
+
+  #urlbar {
+    background-color: #000000 !important;
+  }
+
+  #urlbar input {
+    color: #ffffff !important;
+    background-color: #000000 !important;
+  }
+
+  #urlbar-input {
+    color: #ffffff !important;
+  }
+
+  .urlbarView {
+    background-color: #1a1a1a !important;
+    color: #ffffff !important;
+  }
+
+  /* Purple bar/glow across the very top, like your Chrome screenshot */
+  #navigator-toolbox::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(
+      to bottom,
+      rgba(var(--neo-purple-rgb), 1),
+      rgba(var(--neo-purple-rgb), 0)
+    );
+    pointer-events: none;
+    z-index: 200;
+  }
+
+  #TabsToolbar,
+  #nav-bar {
+    background-color: #000000 !important;
+    color: #e6e6e6 !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  /* ===== TAB BASE STYLING ===== */
+
+  .tabbrowser-tab {
+    transition:
+      transform 0.15s ease,
+      box-shadow 0.15s ease,
+      background-color 0.15s ease,
+      border-color 0.15s ease;
+  }
+
+  .tabbrowser-tab .tab-background {
+    position: relative !important;
+    background-color: #000000 !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 10px 10px 0 0 !important;
+  }
+
+  /* Inactive tabs: slightly shorter (vertical scale only) and dimmer text */
+  .tabbrowser-tab:not([selected="true"]) {
+    transform: scaleY(0.9);
+    transform-origin: bottom center;
+    color: #b3b3b3 !important;
+  }
+
+  .tabbrowser-tab:not([selected="true"]) .tab-label {
+    color: #b3b3b3 !important;
+  }
+
+  /* Active tab: taller (vertical scale only), bright text */
+  .tabbrowser-tab[selected="true"] {
+    transform: scaleY(1.2);
+    transform-origin: bottom center;
+    color: #ffffff !important;
+    z-index: 3 !important;
+  }
+
+  .tabbrowser-tab[selected="true"] .tab-label {
+    color: #ffffff !important;
+  }
+
+  /* Strong purple highlight on active tab background */
+  .tabbrowser-tab[selected="true"] .tab-background {
+    background-color: #050505 !important;
+    border-top: 3px solid rgb(var(--neo-purple-rgb)) !important;
+    box-shadow:
+      0 0 8px rgba(var(--neo-purple-rgb), 0.8),
+      0 0 18px rgba(var(--neo-purple-rgb), 0.5) !important;
+  }
+
+  /* Extra purple fade strip at the top edge of the active tab */
+  .tabbrowser-tab[selected="true"] .tab-background::before {
+    content: "";
+    position: absolute;
+    top: -3px;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(
+      to bottom,
+      rgba(var(--neo-purple-rgb), 1),
+      rgba(var(--neo-purple-rgb), 0)
+    );
+    border-radius: 10px 10px 0 0;
+    pointer-events: none;
+  }
+
+  /* ===== KEEP + BUTTON VISIBLE ===== */
+
+  /* Ensure the new-tab (+) button stays above neighboring tabs */
+  #tabs-newtab-button,
+  #new-tab-button {
+    position: relative !important;
+    z-index: 4 !important;
+  }
+
+  /* ===== PRIORITY TABS (TREATED AS PINNED TABS) ===== */
+
+  /* Right-click → Pin Tab  ► becomes “priority” tab with purple perimeter pulse */
+  .tabbrowser-tab[pinned] .tab-background {
+    border: 1px solid rgba(var(--neo-purple-rgb), 0.9) !important;
+    border-radius: 10px 10px 0 0 !important;
+    animation: priorityPulse 2s infinite linear;
+  }
+
+  @keyframes priorityPulse {
+    0% {
+      box-shadow:
+        0 0 0 0 rgba(var(--neo-purple-rgb), 0.9),
+        0 0 12px rgba(var(--neo-purple-rgb), 0.7);
+    }
+    100% {
+      box-shadow:
+        0 0 0 8px rgba(var(--neo-purple-rgb), 0),
+        0 0 20px rgba(var(--neo-purple-rgb), 0);
+    }
+  }
+
+  /* ===== ONE-TIME PURPLE FLASH FOR NEW / LOADING TABS ===== */
+
+  .tabbrowser-tab[attention="true"] .tab-background,
+  .tabbrowser-tab[busy] .tab-background {
+    border-radius: 10px 10px 0 0 !important;
+    animation: newTabFlash 0.7s 1 ease-out;
+  }
+
+  @keyframes newTabFlash {
+    0% {
+      border: 2px solid rgba(var(--neo-purple-rgb), 1);
+      box-shadow: 0 0 0 0 rgba(var(--neo-purple-rgb), 1);
+    }
+    100% {
+      border: 2px solid rgba(var(--neo-purple-rgb), 0);
+      box-shadow: 0 0 0 12px rgba(var(--neo-purple-rgb), 0);
+    }
+  }
+
+  /* ===== URL BAR + BOOKMARKS: NEO BLACK + PURPLE FOCUS ===== */
+
+  #urlbar,
+  #urlbar-background {
+    background-color: #000000 !important;
+    border-radius: 999px !important;
+    border: 1px solid #000000 !important;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.9) !important;
+  }
+
+    /* ===== HOVER FEEDBACK ===== */
+
+  /* Non-active tab hover: grow a bit + purple highlight */
+  .tabbrowser-tab:not([selected="true"]):hover {
+    transform: scaleY(1.0);
+    transform-origin: bottom center;
+    color: #e0e0e0 !important;
+  }
+
+  .tabbrowser-tab:not([selected="true"]):hover .tab-label {
+    color: #ffffff !important;
+  }
+
+  .tabbrowser-tab:not([selected="true"]):hover .tab-background {
+    background-color: #050505 !important;
+    border-top: 2px solid rgba(var(--neo-purple-rgb), 0.8) !important;
+    box-shadow: 0 0 8px rgba(var(--neo-purple-rgb), 0.6) !important;
+  }
+
+  /* Active tab hover: extra purple pop */
+  .tabbrowser-tab[selected="true"]:hover .tab-background {
+    box-shadow:
+      0 0 10px rgba(var(--neo-purple-rgb), 1),
+      0 0 22px rgba(var(--neo-purple-rgb), 0.9) !important;
+  }
+
+  #urlbar[focused="true"] #urlbar-background {
+    border-color: #000000 !important;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.8) !important;
+  }
+
+  #urlbar-input {
+    color: #ffffff !important;
+  }
+
+  #urlbar-input::placeholder {
+    color: #777777 !important;
+  }
+
+  #PersonalToolbar {
+    background-color: rgb(196, 0, 214) !important;
+    background-image: none !important;
+  }
+
+  #PersonalToolbar .toolbarbutton-text,
+  #PersonalToolbar .bookmark-item {
+    color: #000000 !important;
+  }
+}
